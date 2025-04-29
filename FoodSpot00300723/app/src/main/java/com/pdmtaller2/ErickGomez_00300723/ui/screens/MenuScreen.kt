@@ -41,7 +41,7 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController) {
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
-    var dishQuery = remember { mutableStateOf("") }
+    val dishQuery = remember { mutableStateOf("") }
     val restaurant: Restaurant? = restaurants.firstOrNull { it.id == restaurantId }
 
     if (restaurant == null) {
