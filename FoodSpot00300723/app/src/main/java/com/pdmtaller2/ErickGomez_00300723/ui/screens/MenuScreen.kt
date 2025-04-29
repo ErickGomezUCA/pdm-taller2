@@ -20,7 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.dummy.restaurants
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
+import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,8 +41,7 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController) {
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
-    var dishQuery by remember { mutableStateOf("") }
-    var dishQueryActive by remember {mutableStateOf(false)}
+    var dishQuery = remember { mutableStateOf("") }
     val restaurant: Restaurant? = restaurants.firstOrNull { it.id == restaurantId }
 
     if (restaurant == null) {
@@ -55,11 +54,11 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController) {
         return
     }
 
-    val menu = if (dishQuery == "") {
+    val menu = if (dishQuery.value == "") {
         restaurant.menu
     }  else {
         restaurant.menu.filter { dish ->
-            dish.name.contains(dishQuery, ignoreCase = true)
+            dish.name.contains(dishQuery.value, ignoreCase = true)
         }
     }
 
@@ -72,34 +71,7 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController) {
     ) {
         TopAppBar(
             title = {
-                SearchBar(
-                    query = dishQuery,
-                    active = dishQueryActive,
-                    onQueryChange = { dishQuery = it },
-                    onSearch = { dishQueryActive = false },
-                    onActiveChange = { dishQueryActive = it },
-                    placeholder = { Text("Search for a dish...") },
-                    leadingIcon = { Icon(imageVector =  Icons.Default.Search, contentDescription = "Search") },
-                    trailingIcon = {
-                        if (dishQueryActive) {
-                            Icon(
-                                modifier = Modifier.clickable {
-                                    if (dishQuery.isNotEmpty()) {
-                                        dishQuery = ""
-                                    } else {
-                                        dishQueryActive = false
-                                    }
-                                },
-                                imageVector = Icons.Default.Close,
-                                contentDescription = "Clear search",
-                            )
-
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-
-                }
+                AppSearchBar(query = dishQuery)
             },
             navigationIcon = {
                 IconButton(onClick = { navController.popBackStack() }) {

@@ -3,6 +3,7 @@ package com.pdmtaller2.ErickGomez_00300723.ui.layout
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -26,7 +27,7 @@ data class NavItem(val label: String, val icon: ImageVector, val route: Any)
 fun AppBottomBar(navController: NavHostController) {
     val navItems = listOf(
         NavItem("Restaurantes", Icons.Filled.Home, MainRoute),
-        NavItem("Buscar", Icons.Filled.Favorite, SearchRoute),
+        NavItem("Buscar", Icons.Filled.Search, SearchRoute),
         NavItem("Mis Ordenes", Icons.Filled.ShoppingCart, MyOrdersRoute)
     )
 
@@ -46,7 +47,6 @@ fun AppBottomBar(navController: NavHostController) {
                         restoreState = true
                     }
               },
-//        )
             )
         }
     }
