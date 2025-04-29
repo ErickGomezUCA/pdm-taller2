@@ -52,7 +52,7 @@ fun MainScaffold() {
                 }
 
                 composable <SearchRoute> {
-                    SearchScreen()
+                    SearchScreen(navController = navController)
                 }
 
                 composable <MyOrdersRoute> {
