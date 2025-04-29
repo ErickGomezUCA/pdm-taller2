@@ -1,4 +1,4 @@
-package com.pdmtaller2.ErickGomez_00300723.data
+package com.pdmtaller2.ErickGomez_00300723.data.model
 
 data class Dish(
     val id: Int,

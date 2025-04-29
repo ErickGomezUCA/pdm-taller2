@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 object MainRoute
 
 @Serializable
-object MenuRoute
+data class MenuRoute(val restaurantId: Int)
 
 @Serializable
 object SearchRoute
