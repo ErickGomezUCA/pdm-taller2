@@ -1,5 +1,6 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,13 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.pdmtaller2.ErickGomez_00300723.data.dummy.restaurants
-import com.pdmtaller2.ErickGomez_00300723.data.model.Dish
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 
 @Composable
 fun MenuScreen(restaurantId: Int) {
+    val context = LocalContext.current
+
     val scrollState = rememberScrollState()
     val restaurant: Restaurant? = restaurants.firstOrNull { it.id == restaurantId }
 
@@ -50,8 +53,9 @@ fun MenuScreen(restaurantId: Int) {
                 Text(dish.description)
                 Text(dish.imageUrl)
 
-//            Show a Toast with "$dish.name agregado al carrito"
-                Button(onClick = {}) {
+                Button(onClick = {
+                    Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT).show()
+                }) {
                     Text("Add to Cart")
                 }
             }
