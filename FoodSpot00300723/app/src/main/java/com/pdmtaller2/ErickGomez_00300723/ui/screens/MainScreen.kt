@@ -1,10 +1,14 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.Restaurant
+import com.pdmtaller2.ErickGomez_00300723.ui.components.RestaurantCard
+import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 
 val restaurants: List<Restaurant> = listOf(
     Restaurant(
@@ -26,7 +30,7 @@ val restaurants: List<Restaurant> = listOf(
 )
 
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavHostController) {
     // Group restaurants by categories
     val categoriesWithRestaurants = restaurants
         .flatMap { restaurant ->
@@ -35,14 +39,19 @@ fun MainScreen() {
         .groupBy({ it.first }, { it.second })
 
     Column {
-        Text(text = "Restaurantes por Categorías")
+        Text("FoodSpot")
 
-        // Display each category and its restaurants
-        categoriesWithRestaurants.forEach { (category, restaurants) ->
-            Text(text = "Categoría: $category")
-//            TODO: Navigate between restaurants
-            restaurants.forEach { restaurant ->
-                Text(text = "- ${restaurant.name}")
+        LazyRow {
+            items(categoriesWithRestaurants.size) { index ->
+                val category = categoriesWithRestaurants.keys.elementAt(index)
+                val restaurants = categoriesWithRestaurants[category] ?: emptyList()
+
+                Text(text = "Categoría: $category")
+                restaurants.forEach { restaurant ->
+                    RestaurantCard(
+                        name = restaurant.name,
+                    ) { navController.navigate(MenuRoute.route) }
+                }
             }
         }
     }
@@ -51,5 +60,5 @@ fun MainScreen() {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+//    MainScreen()
 }

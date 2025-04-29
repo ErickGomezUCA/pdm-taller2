@@ -3,13 +3,21 @@ package com.pdmtaller2.ErickGomez_00300723.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object MainRoute
+object MainRoute {
+    const val route = "main"
+}
 
 @Serializable
-object MenuRoute
+object MenuRoute {
+    const val route = "menu"
+}
 
 @Serializable
-object SearchRoute
+object SearchRoute {
+    const val route = "search"
+}
 
 @Serializable
-object MyOrdersRoute
+object MyOrdersRoute {
+    const val route = "my_orders"
+}

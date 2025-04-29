@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pdmtaller2.ErickGomez_00300723.data.Dish
+import com.pdmtaller2.ErickGomez_00300723.ui.layout.MainScaffold
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MainRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.theme.FoodSpotByEgomezTheme
@@ -38,74 +39,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoodSpotByEgomezTheme {
-                val selectedItem = remember { mutableStateOf(0) }
-                val items = listOf("Restaurantes", "Buscar", "Mis Órdenes")
-                val icons = listOf(Icons.Filled.Home, Icons.Filled.Menu, Icons.Filled.Person)
-
-                Scaffold(modifier = Modifier.fillMaxSize(), bottomBar = {
-                    NavigationBar {
-                        items.forEachIndexed { index, item ->
-                            NavigationBarItem(
-                                icon = { Icon(imageVector = icons[index], contentDescription = item) },
-                                label = { Text(item) },
-                                selected = selectedItem.value == index,
-                                onClick = { selectedItem.value = index }
-                            )
-                        }
-                    }
-                }) { innerPadding ->
-                    val navController = rememberNavController()
-
-                    Column (
-                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
-                    ) {
-                        NavHost(
-                            navController = navController,
-                            startDestination = MainRoute
-                        ) {
-                            composable <MainRoute> {
-                                MainScreen()
-                            }
-
-                            composable <MenuRoute> {
-                                MenuScreen(restaurantTitle = "Example", restaurantDescription = "Example Description", dishes = listOf(
-                                    Dish(
-                                        id = 1,
-                                        name = "Dish 1",
-                                        description = "Description 1",
-                                        imageUrl = "https://example.com/dish1.jpg"
-                                    ),
-                                    Dish(
-                                        id = 2,
-                                        name = "Dish 2",
-                                        description = "Description 2",
-                                        imageUrl = "https://example.com/dish2.jpg"
-                                    )
-                                ))
-                            }
-                        }
-
-                    }
-                }
+                MainScaffold()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    FoodSpotByEgomezTheme {
-        Greeting("Android")
     }
 }
