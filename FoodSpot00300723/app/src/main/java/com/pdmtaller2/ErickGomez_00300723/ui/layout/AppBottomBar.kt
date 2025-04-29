@@ -19,32 +19,34 @@ import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MainRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MyOrdersRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.SearchRoute
 
-data class NavItem(val label: String, val icon: ImageVector, val route: String)
+// TODO: Find a way to set route as a proper class instead of Any
+data class NavItem(val label: String, val icon: ImageVector, val route: Any)
 
 @Composable
 fun AppBottomBar(navController: NavHostController) {
     val navItems = listOf(
-        NavItem("Restaurantes", Icons.Filled.Home, MainRoute.route),
-        NavItem("Buscar", Icons.Filled.Favorite, SearchRoute.route),
-        NavItem("Mis Ordenes", Icons.Filled.ShoppingCart, MyOrdersRoute.route)
+        NavItem("Restaurantes", Icons.Filled.Home, MainRoute),
+        NavItem("Buscar", Icons.Filled.Favorite, SearchRoute),
+        NavItem("Mis Ordenes", Icons.Filled.ShoppingCart, MyOrdersRoute)
     )
 
-    var selectedItem by rememberSaveable { mutableStateOf<String>(MainRoute.route) }
+    var selectedItem by rememberSaveable { mutableStateOf<Int>(0) }
 
     NavigationBar {
-        navItems.forEach { item ->
+        navItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 label = { Text(item.label) },
                 icon = { Icon(imageVector = item.icon, contentDescription = item.label) },
-                selected = selectedItem == item.route,
+                selected = selectedItem == index,
                 onClick = {
-                    selectedItem = item.route
+                    selectedItem = index
                     navController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
-                }
+              },
+//        )
             )
         }
     }

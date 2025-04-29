@@ -50,7 +50,7 @@ fun MainScreen(navController: NavHostController) {
                 restaurants.forEach { restaurant ->
                     RestaurantCard(
                         name = restaurant.name,
-                    ) { navController.navigate(MenuRoute.route) }
+                    ) { navController.navigate(MenuRoute) }
                 }
             }
         }

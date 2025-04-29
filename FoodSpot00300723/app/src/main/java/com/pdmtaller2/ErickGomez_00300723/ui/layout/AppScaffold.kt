@@ -48,13 +48,13 @@ fun MainScaffold() {
         ) {
             NavHost(
                 navController = navController,
-                startDestination = MainRoute.route
+                startDestination = MainRoute
             ) {
-                composable(MainRoute.route) {
+                composable<MainRoute> {
                     MainScreen(navController = navController)
                 }
 
-                composable(MenuRoute.route) {
+                composable<MenuRoute> {
                     MenuScreen(
                         restaurantTitle = "Example",
                         restaurantDescription = "Example Description",
@@ -75,11 +75,11 @@ fun MainScaffold() {
                     )
                 }
 
-                composable (SearchRoute.route) {
+                composable <SearchRoute> {
                     SearchScreen()
                 }
 
-                composable (MyOrdersRoute.route) {
+                composable <MyOrdersRoute> {
                     MyOrdersScreen()
                 }
             }
