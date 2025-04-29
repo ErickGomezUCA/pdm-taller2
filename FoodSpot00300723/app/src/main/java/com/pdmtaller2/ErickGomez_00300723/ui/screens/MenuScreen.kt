@@ -1,28 +1,48 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.dummy.restaurants
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(restaurantId: Int) {
+fun MenuScreen(restaurantId: Int, navController: NavHostController) {
     val context = LocalContext.current
 
     val scrollState = rememberScrollState()
+    var dishQuery by remember { mutableStateOf("") }
+    var dishQueryActive by remember {mutableStateOf(false)}
     val restaurant: Restaurant? = restaurants.firstOrNull { it.id == restaurantId }
 
     if (restaurant == null) {
@@ -35,6 +55,14 @@ fun MenuScreen(restaurantId: Int) {
         return
     }
 
+    val menu = if (dishQuery == "") {
+        restaurant.menu
+    }  else {
+        restaurant.menu.filter { dish ->
+            dish.name.contains(dishQuery, ignoreCase = true)
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,19 +70,62 @@ fun MenuScreen(restaurantId: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        TopAppBar(
+            title = {
+                SearchBar(
+                    query = dishQuery,
+                    active = dishQueryActive,
+                    onQueryChange = { dishQuery = it },
+                    onSearch = { dishQueryActive = false },
+                    onActiveChange = { dishQueryActive = it },
+                    placeholder = { Text("Search for a dish...") },
+                    leadingIcon = { Icon(imageVector =  Icons.Default.Search, contentDescription = "Search") },
+                    trailingIcon = {
+                        if (dishQueryActive) {
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    if (dishQuery.isNotEmpty()) {
+                                        dishQuery = ""
+                                    } else {
+                                        dishQueryActive = false
+                                    }
+                                },
+                                imageVector = Icons.Default.Close,
+                                contentDescription = "Clear search",
+                            )
+
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+
+                }
+            },
+            navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Search",
+                    )
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+        )
+
         Text(restaurant.name)
         Text(restaurant.description)
 
         Column {
             Text("Dishes")
 
-            restaurant.menu.forEach { dish ->
+            menu.forEach { dish ->
                 Text(dish.name)
                 Text(dish.description)
                 Text(dish.imageUrl)
 
                 Button(onClick = {
-                    Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT)
+                        .show()
                 }) {
                     Text("Add to Cart")
                 }

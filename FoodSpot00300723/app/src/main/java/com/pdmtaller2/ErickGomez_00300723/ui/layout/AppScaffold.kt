@@ -48,7 +48,7 @@ fun MainScaffold() {
                 composable<MenuRoute> { backStackEntry ->
                     val id = backStackEntry.arguments?.getInt("restaurantId") ?: 0
 
-                    MenuScreen(restaurantId = id)
+                    MenuScreen(navController = navController, restaurantId = id)
                 }
 
                 composable <SearchRoute> {
