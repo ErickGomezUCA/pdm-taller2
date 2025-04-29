@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.pdmtaller2.ErickGomez_00300723.ui.data.Dish
+import com.pdmtaller2.ErickGomez_00300723.data.Dish
 
 @Composable
 fun MenuScreen(restaurantTitle: String, restaurantDescription: String, dishes: List<Dish>) {
