@@ -39,8 +39,8 @@ fun DishCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                    .padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(text = dish.name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                 if (includeDescription) Text(text = dish.description)

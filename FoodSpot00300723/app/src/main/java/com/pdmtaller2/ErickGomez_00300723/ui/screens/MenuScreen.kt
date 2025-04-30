@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil3.compose.AsyncImage
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.ui.components.DishCard
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
@@ -39,7 +41,11 @@ import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: RestaurantsViewModel = viewModel()) {
+fun MenuScreen(
+    restaurantId: Int,
+    navController: NavHostController,
+    viewModel: RestaurantsViewModel = viewModel()
+) {
     val restaurants = viewModel.restaurant.collectAsState()
     val loading = viewModel.loading.collectAsState()
 
@@ -70,16 +76,15 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
 
     val menu = if (dishQuery.value == "") {
         restaurant.menu
-    }  else {
+    } else {
         restaurant.menu.filter { dish ->
             dish.name.contains(dishQuery.value, ignoreCase = true)
         }
     }
 
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -99,18 +104,55 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Text(text = restaurant.name, fontWeight = FontWeight.Bold, fontSize = 24.sp, textAlign = TextAlign.Center)
-        Text(text = restaurant.description, textAlign = TextAlign.Center)
+        AsyncImage(
+            model = restaurant.imageUrl,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(125.dp),
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop
+        )
+        Column(
+            modifier = Modifier.padding(vertical = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = restaurant.name,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                textAlign = TextAlign.Center
+            )
+            Text(
+                text = restaurant.description,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
 
-        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Menu", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 16.dp), textAlign = TextAlign.Center)
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)) {
+            Text(
+                "Menu",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
 
-            Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 menu.forEach { dish ->
                     DishCard(
                         dish = dish,
                         onClickCart = {
-                            Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "${dish.name} agregado al carrito",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         },
                         modifier = Modifier.fillMaxWidth()
                     )
