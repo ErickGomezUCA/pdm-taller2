@@ -1,4 +1,4 @@
-package com.pdmtaller2.ErickGomez_00300723.data.repository.Restaurant
+package com.pdmtaller2.ErickGomez_00300723.data.repository.restaurant
 
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants.MainScreen
+import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.MainScreen
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.MenuScreen
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.MyOrdersScreen
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.SearchScreen

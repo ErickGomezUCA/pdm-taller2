@@ -1,4 +1,4 @@
-package com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants
+package com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn

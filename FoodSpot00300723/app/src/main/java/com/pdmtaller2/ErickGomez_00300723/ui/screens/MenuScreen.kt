@@ -31,7 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
-import com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants.RestaurantsViewModel
+import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

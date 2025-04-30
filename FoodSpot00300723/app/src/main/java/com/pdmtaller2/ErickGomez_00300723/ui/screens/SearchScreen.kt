@@ -1,6 +1,5 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,12 +16,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.data.model.SearchResult
 import com.pdmtaller2.ErickGomez_00300723.helpers.searchDishes
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
-import com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants.RestaurantsViewModel
+import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
