@@ -28,7 +28,7 @@ fun AppSearchBar(query: MutableState<String>) {
         onQueryChange = { query.value = it },
         onSearch = { dishQueryActive = false },
         onActiveChange = { dishQueryActive = it },
-        placeholder = { Text("Search for a dish...") },
+        placeholder = { Text("Busque un platillo aquí...") },
         leadingIcon = { Icon(imageVector =  Icons.Default.Search, contentDescription = "Search") },
         trailingIcon = {
             if (dishQueryActive) {

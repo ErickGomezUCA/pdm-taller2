@@ -40,27 +40,32 @@ fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel
     // Group restaurants by categories
     val categoriesWithRestaurants = getCategoriesWithRestaurants(restaurants.value)
 
-    Column (modifier = Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         Text(text = "FoodSpot", fontSize = 28.sp, fontWeight = FontWeight.Bold)
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(32.dp)) {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(32.dp)
+        ) {
             items(categoriesWithRestaurants.size) { index ->
                 val category = categoriesWithRestaurants.keys.elementAt(index)
                 val restaurants = categoriesWithRestaurants[category] ?: emptyList()
 
-               Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                   Text(text = category, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-                   LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                       items(restaurants.size) { restaurantIndex ->
-                           val restaurant = restaurants[restaurantIndex]
-                           RestaurantCard(
-                               restaurant = restaurant,
-                               onClick = {
-                                   navController.navigate(MenuRoute(restaurantId = restaurant.id))
-                               }
-                           )
-                       }
-                   }
-               }
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = category, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        items(restaurants.size) { restaurantIndex ->
+                            val restaurant = restaurants[restaurantIndex]
+                            RestaurantCard(
+                                restaurant = restaurant,
+                                onClick = {
+                                    navController.navigate(MenuRoute(restaurantId = restaurant.id))
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }

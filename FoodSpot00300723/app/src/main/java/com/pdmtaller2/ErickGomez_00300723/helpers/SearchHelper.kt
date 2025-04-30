@@ -4,22 +4,25 @@ import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.data.model.SearchResult
 
 fun searchDishes(query: String, restaurants: List<Restaurant>): List<SearchResult> {
-    val lowerCaseQuery = query.lowercase()
+    val lowerCaseQuery = query.lowercase().trim()
 
-    return restaurants.flatMap { restaurant ->
+    return restaurants.mapNotNull { restaurant ->
         val matchesRestaurantName = restaurant.name.contains(lowerCaseQuery, ignoreCase = true)
-        val matchesCategory =
-            restaurant.categories.any { it.contains(lowerCaseQuery, ignoreCase = true) }
+        val matchesCategory = restaurant.categories.any { it.contains(lowerCaseQuery, ignoreCase = true) }
 
-        restaurant.menu.filter { dish ->
+        val matchingDishes = restaurant.menu.filter { dish ->
             matchesRestaurantName ||
                     matchesCategory ||
                     dish.name.contains(lowerCaseQuery, ignoreCase = true)
-        }.map { dish ->
+        }
+
+        if (matchingDishes.isNotEmpty()) {
             SearchResult(
-                dish = dish,
-                restaurant = restaurant
+                restaurant = restaurant,
+                dishes = matchingDishes
             )
+        } else {
+            null
         }
     }
 }

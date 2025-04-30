@@ -17,6 +17,6 @@ data class Restaurant(
 )
 
 data class SearchResult(
-    val dish: Dish,
-    val restaurant: Restaurant
+    val restaurant: Restaurant,
+    val dishes: List<Dish>,
 )
