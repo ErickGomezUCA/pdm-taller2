@@ -1,7 +1,6 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,38 +10,49 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.pdmtaller2.ErickGomez_00300723.data.dummy.restaurants
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
+import com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants.RestaurantsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuScreen(restaurantId: Int, navController: NavHostController) {
-    val context = LocalContext.current
+fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: RestaurantsViewModel = viewModel()) {
+    val restaurants = viewModel.restaurant.collectAsState()
+    val loading = viewModel.loading.collectAsState()
 
+    LaunchedEffect(Unit) {
+        viewModel.loadRestaurants()
+    }
+
+    if (loading.value) {
+        CircularProgressIndicator()
+        return
+    }
+
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
+//    Remove states
     val dishQuery = remember { mutableStateOf("") }
-    val restaurant: Restaurant? = restaurants.firstOrNull { it.id == restaurantId }
+    val restaurant: Restaurant? = restaurants.value.firstOrNull { it.id == restaurantId }
 
     if (restaurant == null) {
         Box(
