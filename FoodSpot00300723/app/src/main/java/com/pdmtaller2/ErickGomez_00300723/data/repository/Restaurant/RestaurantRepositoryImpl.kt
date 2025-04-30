@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 
 class RestaurantRepositoryImpl: RestaurantRepository {
     override suspend fun getRestaurants(): List<Restaurant> {
-        delay(5000)
+        delay(1000)
         return restaurants
     }
 }

@@ -1,22 +1,35 @@
-package com.pdmtaller2.ErickGomez_00300723.ui.screens
+package com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.pdmtaller2.ErickGomez_00300723.data.dummy.restaurants
-import com.pdmtaller2.ErickGomez_00300723.data.model.Dish
-import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.ui.components.RestaurantCard
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 
 @Composable
-fun MainScreen(navController: NavHostController) {
+fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel = viewModel()) {
+    val restaurants = viewModel.restaurant.collectAsState()
+    val loading = viewModel.loading.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadRestaurants()
+    }
+
+    if (loading.value) {
+        CircularProgressIndicator()
+        return
+    }
+
     // Group restaurants by categories
-    val categoriesWithRestaurants = restaurants
+    val categoriesWithRestaurants = restaurants.value
         .flatMap { restaurant ->
             restaurant.categories.map { category -> category to restaurant }
         }
