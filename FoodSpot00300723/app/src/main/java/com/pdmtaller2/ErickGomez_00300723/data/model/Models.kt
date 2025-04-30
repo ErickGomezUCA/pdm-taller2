@@ -15,3 +15,8 @@ data class Restaurant(
     val categories: List<String>,
     val menu: List<Dish>,
 )
+
+data class SearchResult(
+    val dish: Dish,
+    val restaurant: Restaurant
+)

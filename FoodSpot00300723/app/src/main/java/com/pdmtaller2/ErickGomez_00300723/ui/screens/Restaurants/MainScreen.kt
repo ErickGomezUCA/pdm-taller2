@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.pdmtaller2.ErickGomez_00300723.helpers.getCategoriesWithRestaurants
 import com.pdmtaller2.ErickGomez_00300723.ui.components.RestaurantCard
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 
@@ -29,11 +30,7 @@ fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel
     }
 
     // Group restaurants by categories
-    val categoriesWithRestaurants = restaurants.value
-        .flatMap { restaurant ->
-            restaurant.categories.map { category -> category to restaurant }
-        }
-        .groupBy({ it.first }, { it.second })
+    val categoriesWithRestaurants = getCategoriesWithRestaurants(restaurants.value)
 
     Column {
         Text("FoodSpot")

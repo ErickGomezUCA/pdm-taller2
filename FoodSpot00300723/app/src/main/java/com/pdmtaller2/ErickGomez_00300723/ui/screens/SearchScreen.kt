@@ -17,37 +17,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.pdmtaller2.ErickGomez_00300723.data.model.Dish
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
+import com.pdmtaller2.ErickGomez_00300723.data.model.SearchResult
+import com.pdmtaller2.ErickGomez_00300723.helpers.searchDishes
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.Restaurants.RestaurantsViewModel
-
-data class SearchResult(
-    val dish: Dish,
-    val restaurant: Restaurant
-)
-
-fun searchDishes(query: String, restaurants: List<Restaurant>): List<SearchResult> {
-    val lowerCaseQuery = query.lowercase()
-
-    return restaurants.flatMap { restaurant ->
-        val matchesRestaurantName = restaurant.name.contains(lowerCaseQuery, ignoreCase = true)
-        val matchesCategory =
-            restaurant.categories.any { it.contains(lowerCaseQuery, ignoreCase = true) }
-
-        restaurant.menu.filter { dish ->
-            matchesRestaurantName ||
-                    matchesCategory ||
-                    dish.name.contains(lowerCaseQuery, ignoreCase = true)
-        }.map { dish ->
-            SearchResult(
-                dish = dish,
-                restaurant = restaurant
-            )
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
