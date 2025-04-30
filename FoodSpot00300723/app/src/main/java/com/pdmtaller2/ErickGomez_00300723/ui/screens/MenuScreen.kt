@@ -12,6 +12,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,6 +37,7 @@ import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 import com.pdmtaller2.ErickGomez_00300723.ui.components.DishCard
+import com.pdmtaller2.ErickGomez_00300723.ui.components.FeedbackMessage
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsViewModel
 
@@ -65,11 +67,8 @@ fun MenuScreen(
     val restaurant: Restaurant? = restaurants.value.firstOrNull { it.id == restaurantId }
 
     if (restaurant == null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("Restaurante no encontrado", style = MaterialTheme.typography.titleLarge)
+        Column(modifier = Modifier.fillMaxSize()) {
+            FeedbackMessage(icon = Icons.Default.Close, message = "Restaurante no encontrado")
         }
         return
     }
@@ -139,6 +138,17 @@ fun MenuScreen(
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
+
+            if (menu.isEmpty()) {
+                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+                    FeedbackMessage(
+                        icon = Icons.Default.Close,
+                        message = "No se encontraron platillos con ese término. Intente nuevamente"
+                    )
+                }
+
+                return
+            }
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
