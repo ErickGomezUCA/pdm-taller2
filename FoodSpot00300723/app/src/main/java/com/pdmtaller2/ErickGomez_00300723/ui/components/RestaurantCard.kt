@@ -1,8 +1,10 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +30,7 @@ fun RestaurantCard(
                     .height(200.dp),
                 contentScale = ContentScale.Crop
             )
-            Text(text = restaurant.name)
+            Text(text = restaurant.name, modifier = Modifier.padding(8.dp))
         }
     }
 }

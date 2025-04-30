@@ -1,9 +1,11 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.components
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -21,8 +23,6 @@ fun DishCard(
 ) {
     Card {
         Column(modifier = Modifier.fillMaxWidth()){
-            Text(dish.name)
-            Text(dish.description)
             AsyncImage(
                 model = dish.imageUrl,
                 contentDescription = null,
@@ -30,8 +30,14 @@ fun DishCard(
                 contentScale = androidx.compose.ui.layout.ContentScale.Crop
             )
 
-            Button(onClick = onClick) {
-                Text("Add to Cart")
+            Column(modifier = Modifier.fillMaxWidth().padding(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(dish.name)
+                Text(dish.description)
+
+
+                Button(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+                    Text("Add to Cart")
+                }
             }
         }
     }

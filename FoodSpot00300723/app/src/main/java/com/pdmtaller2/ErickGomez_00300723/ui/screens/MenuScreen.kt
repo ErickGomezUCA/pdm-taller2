@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,7 +27,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
@@ -73,9 +77,10 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
         }
     }
 
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -95,20 +100,22 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
             modifier = Modifier.fillMaxWidth(),
         )
 
-        Text(restaurant.name)
-        Text(restaurant.description)
+        Text(text = restaurant.name, fontWeight = FontWeight.Bold, fontSize = 24.sp, textAlign = TextAlign.Center)
+        Text(text = restaurant.description, textAlign = TextAlign.Center)
 
-        Column {
-            Text("Dishes")
+        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("Menu", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(bottom = 16.dp), textAlign = TextAlign.Center)
 
-            menu.forEach { dish ->
-                DishCard(
-                    dish = dish,
-                    onClick = {
-                        Toast.makeText(context, "Clicked on ${dish.name}", Toast.LENGTH_SHORT).show()
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
+            Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                menu.forEach { dish ->
+                    DishCard(
+                        dish = dish,
+                        onClick = {
+                            Toast.makeText(context, "Clicked on ${dish.name}", Toast.LENGTH_SHORT).show()
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
