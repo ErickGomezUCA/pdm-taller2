@@ -2,6 +2,8 @@ package com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -41,20 +43,34 @@ fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel
     val categoriesWithRestaurants = getCategoriesWithRestaurants(restaurants.value)
 
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "FoodSpot", fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
+        Text(
+            text = "FoodSpot",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+        )
         LazyColumn(
+            Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             items(categoriesWithRestaurants.size) { index ->
                 val category = categoriesWithRestaurants.keys.elementAt(index)
                 val restaurants = categoriesWithRestaurants[category] ?: emptyList()
 
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text(text = category, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         items(restaurants.size) { restaurantIndex ->
                             val restaurant = restaurants[restaurantIndex]
                             RestaurantCard(
