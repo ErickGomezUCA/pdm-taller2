@@ -44,7 +44,7 @@ fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel
         modifier = Modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "FoodSpot", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+        Text(text = "FoodSpot", fontSize = 28.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 24.dp, bottom = 8.dp))
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {

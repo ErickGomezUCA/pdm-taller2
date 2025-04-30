@@ -110,7 +110,7 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
                     DishCard(
                         dish = dish,
                         onClickCart = {
-                            Toast.makeText(context, "Clicked on ${dish.name}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT).show()
                         },
                         modifier = Modifier.fillMaxWidth()
                     )

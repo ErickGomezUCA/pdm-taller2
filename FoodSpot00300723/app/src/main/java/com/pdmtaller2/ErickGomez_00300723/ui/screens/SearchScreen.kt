@@ -1,14 +1,18 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.Icon
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.model.SearchResult
@@ -35,6 +40,9 @@ import com.pdmtaller2.ErickGomez_00300723.ui.components.DishCard
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 import com.pdmtaller2.ErickGomez_00300723.ui.navigation.MenuRoute
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsViewModel
+import androidx.compose.foundation.shape.CircleShape
+import com.pdmtaller2.ErickGomez_00300723.ui.components.FeedbackMessage
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -69,18 +77,10 @@ fun SearchScreen(navController: NavHostController, viewModel: RestaurantsViewMod
         )
 
         if (searchResult == emptyList<SearchResult>()) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Sus resultados aparecerán aquí",
-                    color = Color(0xFF494949),
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
+            FeedbackMessage(
+                icon = Icons.Default.Search,
+                message = "Sus resultados aparecerán aquí"
+            )
         } else {
             LazyColumn(
                 modifier = Modifier

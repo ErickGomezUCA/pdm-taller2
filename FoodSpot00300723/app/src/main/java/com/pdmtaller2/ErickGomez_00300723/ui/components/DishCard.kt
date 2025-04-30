@@ -47,7 +47,7 @@ fun DishCard(
 
 
                 if (includeButton) Button(onClick = onClickCart, modifier = Modifier.fillMaxWidth()) {
-                    Text("Add to Cart")
+                    Text("Agregar al carrito")
                 }
             }
         }
