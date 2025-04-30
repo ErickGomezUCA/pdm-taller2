@@ -44,7 +44,7 @@ fun MainScreen(navController: NavHostController, viewModel: RestaurantsViewModel
                     items(restaurants.size) { restaurantIndex ->
                         val restaurant = restaurants[restaurantIndex]
                         RestaurantCard(
-                            name = restaurant.name,
+                            restaurant = restaurant,
                             onClick = {
                                 navController.navigate(MenuRoute(restaurantId = restaurant.id))
                             }

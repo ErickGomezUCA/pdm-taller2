@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
+import com.pdmtaller2.ErickGomez_00300723.ui.components.DishCard
 import com.pdmtaller2.ErickGomez_00300723.ui.layout.AppSearchBar
 import com.pdmtaller2.ErickGomez_00300723.ui.screens.restaurants.RestaurantsViewModel
 
@@ -101,16 +102,13 @@ fun MenuScreen(restaurantId: Int, navController: NavHostController, viewModel: R
             Text("Dishes")
 
             menu.forEach { dish ->
-                Text(dish.name)
-                Text(dish.description)
-                Text(dish.imageUrl)
-
-                Button(onClick = {
-                    Toast.makeText(context, "${dish.name} agregado al carrito", Toast.LENGTH_SHORT)
-                        .show()
-                }) {
-                    Text("Add to Cart")
-                }
+                DishCard(
+                    dish = dish,
+                    onClick = {
+                        Toast.makeText(context, "Clicked on ${dish.name}", Toast.LENGTH_SHORT).show()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
     }

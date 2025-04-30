@@ -11,8 +11,8 @@ val restaurants: List<Restaurant> = listOf(
         imageUrl = "https://popmenucloud.com/cdn-cgi/image/width%3D1200%2Cheight%3D1200%2Cfit%3Dscale-down%2Cformat%3Dauto%2Cquality%3D60/xrpblwcd/85ba676e-8969-4793-ba64-46c7724547be.jpg",
         categories = listOf("Comida Mexicana", "Comida Rápida", "Bebidas"),
         menu = listOf(
-            Dish(1, "Tacos de Carnitas", "Tacos tradicionales con carne de cerdo.", "https://example.com/tacos_carnitas.jpg"),
-            Dish(2, "Enchiladas Verdes", "Tortillas rellenas con salsa verde.", "https://example.com/enchiladas_verdes.jpg"),
+            Dish(1, "Tacos", "Tacos sabrosos.", "https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg"),
+            Dish(2, "Enchiladas Verdes", "Tortillas rellenas con salsa verde.", "https://images.pexels.com/photos/2092507/pexels-photo-2092507.jpeg"),
             Dish(3, "Pozole", "Sopa tradicional mexicana con maíz y carne.", "https://example.com/pozole.jpg"),
             Dish(4, "Chiles Rellenos", "Chiles poblanos rellenos de queso.", "https://example.com/chiles_rellenos.jpg"),
             Dish(5, "Agua de Jamaica", "Refrescante bebida de flor de jamaica.", "https://example.com/agua_jamaica.jpg")

@@ -1,22 +1,34 @@
 package com.pdmtaller2.ErickGomez_00300723.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.pdmtaller2.ErickGomez_00300723.data.model.Restaurant
 
 @Composable
 fun RestaurantCard(
-    name: String,
-//    restaurantImageUrl: String,
+    restaurant: Restaurant,
     onClick: () -> Unit
 ) {
     Card(onClick = onClick) {
         Column {
             // Replace with actual image loading logic
-//            Image(painter = rememberImagePainter(restaurantImageUrl), contentDescription = null)
-            Text(text = name)
-
+            AsyncImage(
+                model = restaurant.imageUrl,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                contentScale = ContentScale.Crop
+            )
+            Text(text = restaurant.name)
         }
     }
 }
