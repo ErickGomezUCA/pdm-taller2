@@ -1,47 +1,45 @@
 package com.ebgh00300723.lab05
 
+import TodoPage
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.ebgh00300723.lab05.ui.theme.Laboratorio5Theme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.ebgh00300723.lab05.navigation.HomeRoute
+import com.ebgh00300723.lab05.navigation.SensorsRoute
+import com.ebgh00300723.lab05.navigation.TodoRoute
+import com.ebgh00300723.lab05.pages.HomePage
+import com.ebgh00300723.lab05.pages.SensorsPage
+import com.ebgh00300723.lab05.ui.theme.Laboratorio3Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Laboratorio5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            Laboratorio3Theme {
+                val navController = rememberNavController()
+
+                NavHost(navController = navController, startDestination = HomeRoute) {
+                    composable<HomeRoute> {
+                        HomePage(
+                            onNavigateToGreeting = { navController.navigate(TodoRoute) },
+                            onNavigateToSensors = { navController.navigate(SensorsRoute) }
+                        )
+                    }
+
+                    composable<TodoRoute> {
+                        TodoPage(navController = navController)
+                    }
+                    composable<SensorsRoute> {
+                        SensorsPage(navController = navController)
+                    }
                 }
+
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Laboratorio5Theme {
-        Greeting("Android")
     }
 }
