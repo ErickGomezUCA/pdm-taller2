@@ -1,185 +1,62 @@
+package com.ebgh00300723.lab05.ui.composables
+
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
-import com.ebgh00300723.lab05.models.Card
-import com.ebgh00300723.lab05.ui.components.Cards
 import com.ebgh00300723.lab05.ui.theme.Laboratorio3Theme
-import java.util.Date
+import com.ebgh00300723.lab05.viewmodel.GeneralViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoPage(navController: NavHostController, modifier: Modifier = Modifier) {
-    val lista = remember { mutableStateListOf<Card>() }
-    val openDialog = remember { mutableStateOf(false) }
-    val newCard = remember { mutableStateOf(Card(0, "", "")) }
-    val openDateDialog = remember { mutableStateOf(false) }
+fun TodoPage(
+    openDialog: MutableState<Boolean>,
+    navController: NavHostController,
+    viewModel: GeneralViewModel,
+    modifier: Modifier = Modifier
+) {
+    val tasks = viewModel.tasks.collectAsState()
 
-    Scaffold(
-        modifier = modifier
+    Column {
+        Button(onClick = { navController.popBackStack() }) { Text(text = "Go back to home") }
+    }
+
+    if (openDialog.value) {
+        AddTaskDialog(
+            openDialog = openDialog,
+            tasks = tasks.value,
+            viewModel = viewModel
+        )
+    }
+    Column(
+        modifier = Modifier
             .fillMaxSize(),
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    openDialog.value = true
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add",
-                    tint = Color.Black,
-                )
-            }
-        },
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        if (openDialog.value) {
-            Dialog(
-                properties = DialogProperties(
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = true,
-                ),
-
-                onDismissRequest = { openDialog.value = false },
-                content = {
-                    Card {
-                        Text(
-                            text = "Agregar tarea",
-                            style = MaterialTheme.typography.headlineSmall,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            textAlign = TextAlign.Center,
-                        )
-                        TextField(
-                            value = newCard.value.title,
-                            onValueChange = { newCard.value = newCard.value.copy(title = it) },
-                            label = { Text("Title") },
-                            placeholder = { Text("Title") },
-                            modifier = Modifier.padding(16.dp),
-                        )
-                        TextField(
-                            value = newCard.value.description,
-                            onValueChange = {
-                                newCard.value = newCard.value.copy(description = it)
-                            },
-                            label = { Text("Description") },
-                            placeholder = { Text("Description") },
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        TextField(
-                            value = newCard.value.endDate.toString(),
-                            readOnly = true,
-                            onValueChange = { },
-                            label = { Text("Description") },
-                            placeholder = { Text("Description") },
-                            modifier = Modifier.padding(16.dp)
-                        )
-                        Button(
-                            onClick = {
-                                openDateDialog.value = true
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Text("Select Date")
-                        }
-                        if (openDateDialog.value) {
-                            val datePickerState =
-                                rememberDatePickerState(initialSelectedDateMillis = Date().time)
-                            DatePickerDialog(
-                                onDismissRequest = {
-                                    openDateDialog.value = false
-                                },
-                                confirmButton = {
-                                    Button(onClick = {
-                                        openDateDialog.value = false
-                                        newCard.value = newCard.value.copy(
-                                            endDate = datePickerState.selectedDateMillis?.let {
-                                                Date(it)
-                                            } ?: Date()
-                                        )
-                                    }) {
-                                        Text("OK")
-                                    }
-                                },
-
-                                ) {
-                                DatePicker(state = datePickerState)
-                            }
-                        }
-                        Button(
-                            onClick = {
-                                lista.add(newCard.value)
-                                newCard.value = Card(0, "", "")
-                                openDialog.value = false
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Text("Add")
-                        }
-                    }
-                }
+        CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
+            ), title = { Text("My Tasks") })
+        Column(modifier = Modifier.padding(16.dp)) {
+            TaskList(
+                tasks = tasks.value,
+                viewModel = viewModel
             )
-        }
-
-        Column {
-            Button(onClick = { navController.popBackStack() }) { Text(text = "Go back to home") }
-        }
-
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = it.calculateTopPadding() + 16.dp),
-        ) {
-            items(lista.size) { index ->
-                val card = lista[index]
-                Cards(
-                    pos = index,
-                    max = lista.size - 1,
-                    title = card.title,
-                    description = card.description,
-                    delete = { pos ->
-                        lista.removeAt(pos)
-                    },
-                    check = { checked, pos ->
-                        lista[pos] = card.copy(checked = checked)
-                    },
-                    endDate = card.endDate,
-                    checked = card.checked,
-                    changePosition = { lastPos, newPos ->
-
-                    }
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-            }
         }
     }
 }

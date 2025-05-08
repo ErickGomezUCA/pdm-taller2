@@ -2,12 +2,18 @@ package com.ebgh00300723.lab05.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val Blue100 = Color(0xFF4362BB)
+val BlueAlt100 = Color(0xFF798ECD)
+val LightBlue100 = Color(0xFFABCAFA)
+val DarkBlue100 = Color(0xFF37408E)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Black100 = Color(0xFF25272C)
+val Black75 = Black100.copy(alpha = 0.75f)
+val Black50 = Black100.copy(alpha = 0.5f)
+val Black25 = Black100.copy(alpha = 0.25f)
+val Black10 = Black100.copy(alpha = 0.1f)
+val Black05 = Black100.copy(alpha = 0.05f)
+val White100 = Color(0xFFFAFAFA)
 
-val Green = Color(0xff16a085)
+val Success = Color(0xFF28C166)
+val Red = Color(0xFFEC3A4F)
