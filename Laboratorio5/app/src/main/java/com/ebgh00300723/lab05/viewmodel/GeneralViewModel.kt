@@ -17,15 +17,9 @@ class GeneralViewModel: ViewModel() {
         _tasks.value = _tasks.value.toMutableList().apply { remove(task) }
     }
 
-    fun moveTask(from: Int, to: Int) {
-        val tasksList = _tasks.value.toMutableList()
-        if (from in tasksList.indices && to in tasksList.indices) {
-            val task = tasksList.removeAt(from)
-            tasksList.add(to, task)
-            _tasks.value = tasksList
-        }
+    fun completeTask(task: Task) {
+        task.completed.value = !task.completed.value
     }
-
 
     fun changePriority(task: Task, positions: Int) {
         val tasksList = _tasks.value.toMutableList()
@@ -51,7 +45,7 @@ class GeneralViewModel: ViewModel() {
             return
 
 //    Move element successfully
-        tasksList.remove(task)
-        tasksList.add(newPosition, task)
+        _tasks.value = _tasks.value.toMutableList().apply { remove(task) }
+        _tasks.value = _tasks.value.toMutableList().apply{ add(newPosition, task) }
     }
 }
